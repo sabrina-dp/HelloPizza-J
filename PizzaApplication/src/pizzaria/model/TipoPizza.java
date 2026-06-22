@@ -8,10 +8,9 @@ package pizzaria.model;
  *
  * @author sabrina
  */
-public TipoPizza {
     
 public enum TipoPizza {
     SIMPLES,
     ESPECIAL,
     PREMIUM
-} }
+} 
