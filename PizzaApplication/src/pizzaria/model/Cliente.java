@@ -22,7 +22,7 @@ public class Cliente {
     }
     
       
-    public void SetID(){
+    public void SetID(int ID){
         this.ID = ID;
     }
     
