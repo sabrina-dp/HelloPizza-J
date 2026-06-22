@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pizzaria.model;
 
-/**
- *
- * @author sabrina
- */
+
 public class Cliente {
     private int ID;
     private String nome;
@@ -16,14 +9,14 @@ public class Cliente {
     
     
     public Cliente () {}
-    
+    //atributos do cliente
     public Cliente (int ID, String nome, String sobrenome, String telefone ){
         this.ID = ID;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.telefone = telefone;
             }
-    
+    //métodos, getters e setters.
     public int GetID(){
         return ID;
     }
