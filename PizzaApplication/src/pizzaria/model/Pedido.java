@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pizzaria.model;
 
-/**
- *
- * @author sabrina
- */
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +7,7 @@ public class Pedido {
     private int id;
     private EstadoPedido estado;
     private double precoTotal;
-    private Cliente cliente; // Vinculando com a classe Cliente que você enviou
+    private Cliente cliente;
     private List<ItemPedido> itens;
 
     public Pedido(int id, Cliente cliente) {
@@ -50,6 +42,7 @@ public class Pedido {
     public int getId() { return id; }
     public EstadoPedido getEstado() { return estado; }
     public double getPrecoTotal() { return precoTotal; }
+    public void setPrecoTotal(double precoTotal) { this.precoTotal = precoTotal; }
     public Cliente getCliente() { return cliente; }
     public List<ItemPedido> getItens() { return itens; }
 }
