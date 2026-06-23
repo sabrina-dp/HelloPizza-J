@@ -103,10 +103,10 @@ public class SaborDAO {
     }
 
     private Sabor mapearResultado(ResultSet rs) throws SQLException {
-        Sabor sabor = new Sabor();
-        sabor.setId(rs.getInt("id"));
-        sabor.setNome(rs.getString("nome"));
-        sabor.setTipo(TipoPizza.valueOf(rs.getString("tipo"))); // converte a String do banco de volta para o enum
-        return sabor;
+        return new Sabor(
+            rs.getInt("id"),
+            rs.getString("nome"),
+            TipoPizza.valueOf(rs.getString("tipo")) // converte a String do banco de volta para o enum
+        );
     }
 }
