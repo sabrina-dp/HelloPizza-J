@@ -59,7 +59,7 @@ public class InicializadorBanco {
                     FOREIGN KEY (pedido_id) REFERENCES pedido(id) ON DELETE CASCADE,
                     FOREIGN KEY (pizza_id) REFERENCES pizza(id) ON DELETE CASCADE)""");
 
-            stmt.execute("""INSERT OR IGNORE INTO tabela_preco (id, preco_simples, preco_especial, preco_premium) VALUES (1, 0.10, 0.20, 0.35)""");
+            stmt.execute("INSERT OR IGNORE INTO tabela_preco (id, preco_simples, preco_especial, preco_premium) VALUES (1, 0.10, 0.20, 0.35)");
 
             System.out.println("Banco de dados inicializado com sucesso.");
 
