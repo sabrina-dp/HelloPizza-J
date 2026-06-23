@@ -7,48 +7,46 @@ public class Cliente {
     private String sobrenome;
     private String telefone;
     
-    
-    public Cliente () {}
     //atributos do cliente
     public Cliente (int ID, String nome, String sobrenome, String telefone ){
         this.ID = ID;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.telefone = telefone;
-            }
+    }
+
     //métodos, getters e setters.
-    public int GetID(){
+    public int getId(){
         return ID;
     }
     
-      
-    public void SetID(int ID){
+    public void setId(int ID){
         this.ID = ID;
     }
     
-    public String Getnome(){
+    public String getNome(){
         return nome;
     }
     
-   public void setnome(String nome) {
+   public void setNome(String nome) {
         if(nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome não pode ser vazio.");
         }
         this.nome = nome;
     }
     
-    public String Getsobrenome(){
+    public String getSobrenome(){
         return sobrenome;
     }
     
-     public void setsobrenome(String sobrenome) {
+     public void setSobrenome(String sobrenome) {
         if( sobrenome == null || sobrenome.trim().isEmpty()) {
             throw new IllegalArgumentException("Sobrenome não pode ser vazio.");
         }
         this.sobrenome = sobrenome;
     }
      
-    public String Gettelefone(){
+    public String getTelefone(){
         return telefone;
     }
     
