@@ -1,11 +1,11 @@
 package pizzaria;
 
+import pizzaria.dao.InicializadorBanco;
 import java.sql.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-    InicializadorBanco.inicializar();
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -15,6 +15,8 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) throws Exception {
+        InicializadorBanco.inicializar();
+        
         // TESTE: se printar "SQLite OK!" no console, o banco está funcionando. Deletar depois.
         Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db");
         System.out.println("SQLite OK!");
