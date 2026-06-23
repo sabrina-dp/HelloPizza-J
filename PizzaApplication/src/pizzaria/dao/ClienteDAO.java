@@ -73,54 +73,21 @@ public class ClienteDAO {
         return clientes;
     }
 
-    public List<Cliente> buscarPorNome(String nome) throws SQLException {
-        List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT * FROM cliente WHERE nome LIKE ? OR sobrenome LIKE ? ORDER BY nome";
-
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            String filtro = "%" + nome + "%"; // % permite buscar qualquer parte do nome
-            stmt.setString(1, filtro);
-            stmt.setString(2, filtro);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    clientes.add(mapearResultado(rs));  // rs percorre as linhas retornadas, como um cursor
-                }
-            }
-        }
-        return clientes;
-    }
-
-    public Cliente buscarPorTelefone(String telefone) throws SQLException {
-        String sql = "SELECT * FROM cliente WHERE telefone = ?";
-
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setString(1, telefone);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return mapearResultado(rs);
-                }
-            }
-        }
-        return null;
-    }
-
     /**
      * Filtra clientes por sobrenome, parte do sobrenome ou telefone usando um único termo.
      */
     public List<Cliente> buscarFiltrado(String termo) throws SQLException {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT * FROM cliente WHERE sobrenome LIKE ? OR telefone LIKE ? ORDER BY nome";
+        String sql = "SELECT * FROM cliente WHERE sobrenome LIKE ? OR telefone LIKE ? ORDER BY nome, sobrenome";
 
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            String curinga = "%" + termo + "%";
+            String curinga = "%" + termo + "%"; // % permite buscar qualquer parte do nome
             stmt.setString(1, curinga);
             stmt.setString(2, curinga);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    clientes.add(mapearResultado(rs));
+                    clientes.add(mapearResultado(rs));  // rs percorre as linhas retornadas, como um cursor
                 }
             }
         }
