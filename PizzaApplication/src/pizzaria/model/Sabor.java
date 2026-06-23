@@ -7,22 +7,25 @@ public class Sabor {
     private String nome;
     private TipoPizza tipo;
   
-    public Sabor(){}
-    
-    public int GetID(){
-        return ID;
+    public Sabor(int id, String nome, TipoPizza tipo) {
+        this.id = id;
+        this.nome = nome;
+        this.tipo = tipo;
     }
-    
+        
+    public int getId(){
+        return id;
+    }
       
-    public void SetID(){
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
-    
-    public String Getnome(){
+      
+    public String getNome(){
         return nome;
     }
     
-   public void setnome(String nome) {
+    public void setNome(String nome) {
         if(nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome não pode ser vazio.");
         }
@@ -44,7 +47,4 @@ public class Sabor {
     public String toString() {
         return nome + " (" + tipo + ")";
     }
-}
-    
-}
 }
