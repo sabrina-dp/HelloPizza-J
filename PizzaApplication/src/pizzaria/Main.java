@@ -5,7 +5,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-
+    InicializadorBanco.inicializar();
+    
     @Override
     public void start(Stage stage) throws Exception {
         // TESTE: se uma janela abrir, o JavaFX está funcionando. Deletar depois.
