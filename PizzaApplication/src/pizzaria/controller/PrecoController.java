@@ -7,7 +7,7 @@ package pizzaria.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import TabelaPreco; // Verifique o pacote correto se houver
+import pizzaria.model.TabelaPreco;
 
 public class PrecoController {
 
