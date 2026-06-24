@@ -9,43 +9,38 @@ import javafx.event.ActionEvent;
 
 public class HomeController {
 
-    private void abrirTela(String arquivoFXML) {
-
+    private void abrirTela(String arquivoFXML, String titulo) {
         try {
-
             Parent root = FXMLLoader.load(
-                    getClass().getResource("/pizzaria/view/" + arquivoFXML));
-
+                getClass().getResource("/pizzaria/view/" + arquivoFXML));
             Stage stage = new Stage();
-
+            stage.setTitle(titulo);
             stage.setScene(new Scene(root));
-
             stage.show();
-
         } catch (IOException e) {
-
+            System.err.println("Erro ao abrir tela " + titulo + ": " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void abrirClientes(ActionEvent event) {
-        abrirTela("ClienteView.fxml");
+    public void abrirClientes(ActionEvent event) { 
+        abrirTela("ClienteView.fxml", "Clientes"); 
     }
 
     public void abrirPedidos(ActionEvent event) {
-        abrirTela("PedidoView.fxml");
+        abrirTela("PedidoView.fxml", "Pedidos"); 
     }
 
-    public void abrirSabores(ActionEvent event) {
-        abrirTela("SaborView.fxml");
+    public void abrirSabores(ActionEvent event) { 
+        abrirTela("SaborView.fxml", "Sabores"); 
     }
 
     public void abrirPrecos(ActionEvent event) {
-        abrirTela("PrecoView.fxml");
+        abrirTela("PrecoView.fxml", "Preços"); 
     }
 
     public void abrirStatus(ActionEvent event) {
-        abrirTela("StatusView.fxml");
+        abrirTela("StatusView.fxml", "Status dos Pedidos"); 
     }
 
     public void sair(ActionEvent event) {
