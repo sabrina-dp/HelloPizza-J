@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
 
 
 <BorderPane xmlns="http://javafx.com/javafx"
@@ -134,5 +133,5 @@
     </bottom>
 
 </BorderPane>   
-</AnchorPane>
+
 
