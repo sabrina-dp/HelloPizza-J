@@ -5,7 +5,117 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-    
+
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pizzaria.controller.StatusController">
+
+    <top>
+
+        <VBox spacing="10">
+
+            <padding>
+                <Insets top="15"
+                        right="15"
+                        bottom="15"
+                        left="15"/>
+            </padding>
+
+            <Label text="Status dos Pedidos"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <HBox spacing="10">
+
+                <Label text="Cliente:"/>
+
+                <TextField fx:id="txtPesquisaCliente"
+                           promptText="Nome ou telefone"/>
+
+                <Button text="Buscar"
+                        onAction="#buscarPedidos"/>
+
+            </HBox>
+
+        </VBox>
+
+    </top>
+
+    <center>
+
+        <VBox spacing="10">
+
+            <padding>
+                <Insets top="10"
+                        right="15"
+                        bottom="10"
+                        left="15"/>
+            </padding>
+
+            <TableView fx:id="tblPedidos">
+
+                <columns>
+
+                    <TableColumn fx:id="colId"
+                                 text="Pedido"
+                                 prefWidth="80"/>
+
+                    <TableColumn fx:id="colCliente"
+                                 text="Cliente"
+                                 prefWidth="180"/>
+
+                    <TableColumn fx:id="colTelefone"
+                                 text="Telefone"
+                                 prefWidth="140"/>
+
+                    <TableColumn fx:id="colValor"
+                                 text="Valor"
+                                 prefWidth="120"/>
+
+                    <TableColumn fx:id="colEstado"
+                                 text="Estado"
+                                 prefWidth="120"/>
+
+                </columns>
+
+            </TableView>
+
+        </VBox>
+
+    </center>
+
+    <bottom>
+
+        <VBox spacing="10">
+
+            <padding>
+                <Insets top="10"
+                        right="15"
+                        bottom="15"
+                        left="15"/>
+            </padding>
+
+            <Label fx:id="lblPedidoSelecionado"
+                   text="Nenhum pedido selecionado"/>
+
+            <HBox spacing="10">
+
+                <Label text="Novo Estado:"/>
+
+                <ComboBox fx:id="cbEstado"
+                          prefWidth="180"/>
+
+                <Button text="Atualizar Estado"
+                        onAction="#atualizarEstado"/>
+
+            </HBox>
+
+        </VBox>
+
+    </bottom>
+
+</BorderPane>   
 </AnchorPane>
