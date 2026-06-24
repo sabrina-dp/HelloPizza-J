@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
 
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="pizzaria.controller.ClienteController">
 
     <top>
-        <VBox spacing="10" style="-fx-padding: 15;">
+
+        <VBox spacing="10" style="-fx-padding:15;">
 
             <Label text="Cadastro de Clientes"
-                   style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+                   style="-fx-font-size:20px; -fx-font-weight:bold;"/>
 
             <GridPane hgap="10" vgap="10">
 
-                <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Label text="Nome:"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"/>
+
                 <TextField fx:id="txtNome"
                            GridPane.rowIndex="0"
                            GridPane.columnIndex="1"/>
 
-                <Label text="Sobrenome:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Label text="Sobrenome:"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"/>
+
                 <TextField fx:id="txtSobrenome"
                            GridPane.rowIndex="1"
                            GridPane.columnIndex="1"/>
 
-                <Label text="Telefone:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <Label text="Telefone:"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="0"/>
+
                 <TextField fx:id="txtTelefone"
                            GridPane.rowIndex="2"
                            GridPane.columnIndex="1"/>
@@ -54,18 +59,21 @@
             </HBox>
 
         </VBox>
+
     </top>
 
     <center>
 
-        <VBox spacing="10" style="-fx-padding: 15;">
+        <VBox spacing="10" style="-fx-padding:15;">
 
             <HBox spacing="10">
 
                 <Label text="Sobrenome:"/>
+
                 <TextField fx:id="txtFiltroSobrenome"/>
 
                 <Label text="Telefone:"/>
+
                 <TextField fx:id="txtFiltroTelefone"/>
 
                 <Button text="Pesquisar"
@@ -79,7 +87,7 @@
 
                     <TableColumn fx:id="colId"
                                  text="ID"
-                                 prefWidth="70"/>
+                                 prefWidth="80"/>
 
                     <TableColumn fx:id="colNome"
                                  text="Nome"
@@ -101,5 +109,4 @@
 
     </center>
 
-</BorderPane>  
-</AnchorPane>
+</BorderPane>
