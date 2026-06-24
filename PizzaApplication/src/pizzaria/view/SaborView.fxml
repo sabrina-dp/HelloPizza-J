@@ -5,7 +5,134 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-    
+
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pizzaria.controller.SaborController">
+
+    <top>
+
+        <VBox spacing="10">
+
+            <padding>
+                <Insets top="15"
+                        right="15"
+                        bottom="15"
+                        left="15"/>
+            </padding>
+
+            <Label text="Cadastro de Sabores"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="10" vgap="10">
+
+                <Label text="Nome do Sabor:"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"/>
+
+                <TextField fx:id="txtNomeSabor"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Tipo da Pizza:"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"/>
+
+                <ComboBox fx:id="cbTipoPizza"
+                          prefWidth="200"
+                          GridPane.rowIndex="1"
+                          GridPane.columnIndex="1"/>
+
+            </GridPane>
+
+            <HBox spacing="10">
+
+                <Button text="Cadastrar"
+                        onAction="#cadastrarSabor"/>
+
+                <Button text="Atualizar"
+                        onAction="#atualizarSabor"/>
+
+                <Button text="Excluir"
+                        onAction="#excluirSabor"/>
+
+                <Button text="Limpar"
+                        onAction="#limparCampos"/>
+
+            </HBox>
+
+        </VBox>
+
+    </top>
+
+    <center>
+
+        <VBox spacing="10">
+
+            <padding>
+                <Insets top="10"
+                        right="15"
+                        bottom="10"
+                        left="15"/>
+            </padding>
+
+            <HBox spacing="10">
+
+                <Label text="Pesquisar:"/>
+
+                <TextField fx:id="txtPesquisa"/>
+
+                <Button text="Buscar"
+                        onAction="#pesquisarSabor"/>
+
+            </HBox>
+
+            <TableView fx:id="tblSabores">
+
+                <columns>
+
+                    <TableColumn fx:id="colId"
+                                 text="ID"
+                                 prefWidth="80"/>
+
+                    <TableColumn fx:id="colNome"
+                                 text="Sabor"
+                                 prefWidth="250"/>
+
+                    <TableColumn fx:id="colTipo"
+                                 text="Tipo"
+                                 prefWidth="150"/>
+
+                </columns>
+
+            </TableView>
+
+        </VBox>
+
+    </center>
+
+    <bottom>
+
+        <HBox alignment="CENTER_RIGHT">
+
+            <padding>
+                <Insets top="10"
+                        right="15"
+                        bottom="15"
+                        left="15"/>
+            </padding>
+
+            <Label fx:id="lblTotalSabores"
+                   text="Total de sabores: 0"/>
+
+        </HBox>
+
+    </bottom>
+
+</BorderPane>   
 </AnchorPane>
+
