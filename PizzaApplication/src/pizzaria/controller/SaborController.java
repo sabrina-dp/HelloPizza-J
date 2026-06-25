@@ -1,18 +1,14 @@
-/*
- * Controla os sabores disponíveis na pizzaria.
- */
-
 package pizzaria.controller;
 
-import java.sql.SQLException;
-
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
+import java.sql.SQLException;
+import java.util.List;
 
 import pizzaria.dao.SaborDAO;
 import pizzaria.model.Sabor;
@@ -20,157 +16,161 @@ import pizzaria.model.TipoPizza;
 
 public class SaborController {
 
-    @FXML
-    private TextField txtNomeSabor;
+    @FXML private TextField txtNomeSabor;
+    @FXML private TextField txtPesquisa;
+    @FXML private ComboBox<TipoPizza> cbTipoPizza;
+    @FXML private TableView<Sabor> tblSabores;
+    @FXML private TableColumn<Sabor, Integer> colId;
+    @FXML private TableColumn<Sabor, String> colNome;
+    @FXML private TableColumn<Sabor, String> colTipo;
+    @FXML private Label lblTotalSabores;
 
-    @FXML
-    private TextField txtPesquisa;
-
-    @FXML
-    private ComboBox<TipoPizza> cbTipoPizza;
-
-    @FXML
-    private TableView<Sabor> tblSabores;
-
-    @FXML
-    private TableColumn<Sabor, Integer> colId;
-
-    @FXML
-    private TableColumn<Sabor, String> colNome;
-
-    @FXML
-    private TableColumn<Sabor, TipoPizza> colTipo;
-
-    @FXML
-    private Label lblTotalSabores;
-
-    private SaborDAO saborDAO;
+    private final SaborDAO saborDAO = new SaborDAO();
+    private final ObservableList<Sabor> listaSabores = FXCollections.observableArrayList();
+    private Sabor saborSelecionado = null;
 
     @FXML
     public void initialize() {
-
-        saborDAO = new SaborDAO();
+        colId.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getId()).asObject());
+        colNome.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getNome()));
+        colTipo.setCellValueFactory(c -> new SimpleStringProperty(c.getValue().getTipo().name()));
 
         cbTipoPizza.getItems().addAll(TipoPizza.values());
+
+        tblSabores.setItems(listaSabores);
+
+        // Clicando em uma linha preenche os campos para edição
+        tblSabores.getSelectionModel().selectedItemProperty().addListener((obs, anterior, selecionado) -> {
+            if (selecionado != null) {
+                saborSelecionado = selecionado;
+                txtNomeSabor.setText(selecionado.getNome());
+                cbTipoPizza.setValue(selecionado.getTipo());
+            }
+        });
 
         carregarSabores();
     }
 
     @FXML
     private void cadastrarSabor() {
+        String nome = txtNomeSabor.getText().trim();
+        TipoPizza tipo = cbTipoPizza.getValue();
 
-        try {
-
-            Sabor sabor = new Sabor(
-                    0,
-                    txtNomeSabor.getText(),
-                    cbTipoPizza.getValue());
-
-            saborDAO.inserir(sabor);
-
-            carregarSabores();
-
-            limparCampos();
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void pesquisarSabor() {
-
-        String nome = txtPesquisa.getText();
-
-        try {
-
-            var lista = saborDAO.listarTodos();
-
-            var filtrada = lista.stream()
-                    .filter(s -> s.getNome().toLowerCase()
-                            .contains(nome.toLowerCase()))
-                    .toList();
-
-            tblSabores.setItems(
-                    FXCollections.observableArrayList(filtrada));
-
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void excluirSabor() {
-
-        Sabor selecionado =
-                tblSabores.getSelectionModel().getSelectedItem();
-
-        if (selecionado == null)
+        if (nome.isEmpty() || tipo == null) {
+            mostrarErro("Preencha todos os campos.");
             return;
+        }
 
         try {
-
-            saborDAO.remover(selecionado.getId());
-
+            saborDAO.inserir(new Sabor(0, nome, tipo));
+            limparCampos();
             carregarSabores();
-
+            mostrarInfo("Sabor cadastrado com sucesso!");
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            mostrarErro("Erro ao cadastrar sabor: " + e.getMessage());
         }
     }
 
     @FXML
     private void atualizarSabor() {
-
-        Sabor selecionado =
-                tblSabores.getSelectionModel().getSelectedItem();
-
-        if (selecionado == null)
+        if (saborSelecionado == null) {
+            mostrarErro("Selecione um sabor na tabela para atualizar.");
             return;
+        }
+
+        String nome = txtNomeSabor.getText().trim();
+        TipoPizza tipo = cbTipoPizza.getValue();
+
+        if (nome.isEmpty() || tipo == null) {
+            mostrarErro("Preencha todos os campos.");
+            return;
+        }
 
         try {
-
-            Sabor atualizado = new Sabor(
-                    selecionado.getId(),
-                    txtNomeSabor.getText(),
-                    cbTipoPizza.getValue());
-
-            saborDAO.atualizar(atualizado);
-
+            saborDAO.atualizar(new Sabor(saborSelecionado.getId(), nome, tipo));
+            limparCampos();
             carregarSabores();
-
+            mostrarInfo("Sabor atualizado com sucesso!");
         } catch (SQLException e) {
+            mostrarErro("Erro ao atualizar sabor: " + e.getMessage());
+        }
+    }
 
-            e.printStackTrace();
+    @FXML
+    private void excluirSabor() {
+        if (saborSelecionado == null) {
+            mostrarErro("Selecione um sabor na tabela para excluir.");
+            return;
+        }
+
+        Alert confirmacao = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmacao.setHeaderText(null);
+        confirmacao.setContentText("Excluir o sabor \"" + saborSelecionado.getNome() + "\"?");
+        confirmacao.showAndWait().ifPresent(resposta -> {
+            if (resposta == ButtonType.OK) {
+                try {
+                    saborDAO.remover(saborSelecionado.getId());
+                    limparCampos();
+                    carregarSabores();
+                    mostrarInfo("Sabor excluído com sucesso!");
+                } catch (SQLException e) {
+                    mostrarErro("Erro ao excluir sabor: " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    @FXML
+    private void pesquisarSabor() {
+        String filtro = txtPesquisa.getText().trim();
+
+        if (filtro.isEmpty()) {
+            carregarSabores();
+            return;
+        }
+
+        try {
+            List<Sabor> resultado = saborDAO.listarTodos();
+            List<Sabor> filtrada = resultado.stream()
+                    .filter(s -> s.getNome().toLowerCase().contains(filtro.toLowerCase()))
+                    .toList();
+            listaSabores.setAll(filtrada);
+            lblTotalSabores.setText("Total de sabores: " + filtrada.size());
+        } catch (SQLException e) {
+            mostrarErro("Erro ao pesquisar: " + e.getMessage());
         }
     }
 
     @FXML
     private void limparCampos() {
-
         txtNomeSabor.clear();
         txtPesquisa.clear();
         cbTipoPizza.setValue(null);
+        saborSelecionado = null;
+        tblSabores.getSelectionModel().clearSelection();
     }
 
     private void carregarSabores() {
-
         try {
-
-            tblSabores.setItems(
-                    FXCollections.observableArrayList(
-                            saborDAO.listarTodos()));
-
-            lblTotalSabores.setText(
-                    "Total de sabores: "
-                    + saborDAO.listarTodos().size());
-
+            List<Sabor> sabores = saborDAO.listarTodos();
+            listaSabores.setAll(sabores);
+            lblTotalSabores.setText("Total de sabores: " + sabores.size());
         } catch (SQLException e) {
-
-            e.printStackTrace();
+            mostrarErro("Erro ao carregar sabores: " + e.getMessage());
         }
+    }
+
+    private void mostrarErro(String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
+
+    private void mostrarInfo(String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
     }
 }
