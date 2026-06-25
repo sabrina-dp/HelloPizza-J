@@ -4,9 +4,9 @@
 
 package pizzaria.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.SQLException;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -14,12 +14,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
+import pizzaria.dao.SaborDAO;
 import pizzaria.model.Sabor;
 import pizzaria.model.TipoPizza;
 
 public class SaborController {
-
-    private List<Sabor> saboresDisponiveis;
 
     @FXML
     private TextField txtNomeSabor;
@@ -45,94 +44,133 @@ public class SaborController {
     @FXML
     private Label lblTotalSabores;
 
-    public SaborController() {
-
-        saboresDisponiveis = new ArrayList<>();
-
-    }
+    private SaborDAO saborDAO;
 
     @FXML
     public void initialize() {
 
-        cbTipoPizza.getItems().addAll(
-                TipoPizza.values()
-        );
+        saborDAO = new SaborDAO();
 
-        atualizarTotal();
+        cbTipoPizza.getItems().addAll(TipoPizza.values());
 
+        carregarSabores();
     }
 
     @FXML
     private void cadastrarSabor() {
 
-        String nome = txtNomeSabor.getText();
-        TipoPizza tipo = cbTipoPizza.getValue();
+        try {
 
-        System.out.println("Cadastrar sabor:");
-        System.out.println(nome);
-        System.out.println(tipo);
+            Sabor sabor = new Sabor(
+                    0,
+                    txtNomeSabor.getText(),
+                    cbTipoPizza.getValue());
 
-    }
+            saborDAO.inserir(sabor);
 
-    @FXML
-    private void atualizarSabor() {
+            carregarSabores();
 
-        System.out.println("Atualizar sabor");
+            limparCampos();
 
-    }
+        } catch (SQLException e) {
 
-    @FXML
-    private void excluirSabor() {
-
-        System.out.println("Excluir sabor");
-
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void pesquisarSabor() {
 
-        String pesquisa = txtPesquisa.getText();
+        String nome = txtPesquisa.getText();
 
-        System.out.println("Pesquisar: " + pesquisa);
+        try {
 
+            var lista = saborDAO.listarTodos();
+
+            var filtrada = lista.stream()
+                    .filter(s -> s.getNome().toLowerCase()
+                            .contains(nome.toLowerCase()))
+                    .toList();
+
+            tblSabores.setItems(
+                    FXCollections.observableArrayList(filtrada));
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void excluirSabor() {
+
+        Sabor selecionado =
+                tblSabores.getSelectionModel().getSelectedItem();
+
+        if (selecionado == null)
+            return;
+
+        try {
+
+            saborDAO.remover(selecionado.getId());
+
+            carregarSabores();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void atualizarSabor() {
+
+        Sabor selecionado =
+                tblSabores.getSelectionModel().getSelectedItem();
+
+        if (selecionado == null)
+            return;
+
+        try {
+
+            Sabor atualizado = new Sabor(
+                    selecionado.getId(),
+                    txtNomeSabor.getText(),
+                    cbTipoPizza.getValue());
+
+            saborDAO.atualizar(atualizado);
+
+            carregarSabores();
+
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
     }
 
     @FXML
     private void limparCampos() {
 
         txtNomeSabor.clear();
+        txtPesquisa.clear();
         cbTipoPizza.setValue(null);
-
     }
 
-    private void atualizarTotal() {
+    private void carregarSabores() {
 
-        lblTotalSabores.setText(
-                "Total de sabores: " + saboresDisponiveis.size()
-        );
+        try {
 
-    }
+            tblSabores.setItems(
+                    FXCollections.observableArrayList(
+                            saborDAO.listarTodos()));
 
-    public List<Sabor> listarSabores() {
+            lblTotalSabores.setText(
+                    "Total de sabores: "
+                    + saborDAO.listarTodos().size());
 
-        return saboresDisponiveis;
+        } catch (SQLException e) {
 
-    }
-
-    public Sabor buscarPorNome(String nome) {
-
-        for (Sabor s : saboresDisponiveis) {
-
-            if (s.getNome().equalsIgnoreCase(nome)) {
-
-                return s;
-
-            }
-
+            e.printStackTrace();
         }
-
-        return null;
-
     }
-
 }
