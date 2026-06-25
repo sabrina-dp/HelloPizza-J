@@ -330,4 +330,19 @@ public class PedidoController {
         alert.setContentText(mensagem);
         alert.showAndWait();
     }
+    
+    public void carregarPedido(Pedido pedido) {
+        if (pedido == null) return;
+        
+        this.pedidoAtual = pedido;
+        this.clienteAtual = pedido.getCliente();
+
+        if (this.clienteAtual != null) {
+            txtTelefone.setText(this.clienteAtual.getTelefone());
+            lblCliente.setText(this.clienteAtual.getNomeCompleto());
+        }
+        
+        itensObservable.setAll(pedido.getItens());
+        atualizarTotal();
+    }
 }
