@@ -9,13 +9,15 @@
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="pizzaria.controller.HomeController"
       alignment="CENTER"
-      spacing="15">
+      spacing="15"
+      stylesheets="@style.css"
+      styleClass="fundo-home">
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="🍕Pizzaria Geométrica"
+    <Label text="🍕Pizzaria HelloPizza"
            style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
     <Button text="Cadastrar Pedido"
