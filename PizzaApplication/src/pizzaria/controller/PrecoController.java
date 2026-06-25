@@ -1,80 +1,87 @@
-/*
- * Gerencia as taxas e valores por unidade de área configuradas na TabelaPreco.
- */
-
 package pizzaria.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
-
 import pizzaria.dao.PrecoDAO;
 import pizzaria.model.TabelaPreco;
+import java.sql.SQLException;
 
 public class PrecoController {
 
-    @FXML
-    private TextField txtPrecoSimples;
-
-    @FXML
-    private TextField txtPrecoEspecial;
-
-    @FXML
-    private TextField txtPrecoPremium;
-
-    @FXML
-    private Label lblStatus;
+    @FXML private TextField txtPrecoSimples;
+    @FXML private TextField txtPrecoEspecial;
+    @FXML private TextField txtPrecoPremium;
 
     private PrecoDAO precoDAO;
 
     @FXML
     public void initialize() {
-
         precoDAO = new PrecoDAO();
-
         carregarPrecos();
     }
 
     @FXML
     private void carregarPrecos() {
-
-        TabelaPreco tabela = precoDAO.buscar();
-
-        if (tabela != null) {
-
-            txtPrecoSimples.setText(
-                    String.valueOf(tabela.getPrecoSimples()));
-
-            txtPrecoEspecial.setText(
-                    String.valueOf(tabela.getPrecoEspecial()));
-
-            txtPrecoPremium.setText(
-                    String.valueOf(tabela.getPrecoPremium()));
+        try {
+            TabelaPreco tabela = precoDAO.buscar();
+            if (tabela != null) {
+                txtPrecoSimples.setText(String.valueOf(tabela.getPrecoSimples()));
+                txtPrecoEspecial.setText(String.valueOf(tabela.getPrecoEspecial()));
+                txtPrecoPremium.setText(String.valueOf(tabela.getPrecoPremium()));
+            }
+        } catch (SQLException e) {
+            mostrarErro("Erro ao carregar preços: " + e.getMessage());
         }
     }
 
     @FXML
     private void salvarPrecos() {
+        String simplesStr = txtPrecoSimples.getText().trim();
+        String especialStr = txtPrecoEspecial.getText().trim();
+        String premiumStr = txtPrecoPremium.getText().trim();
+
+        if (simplesStr.isEmpty() || especialStr.isEmpty() || premiumStr.isEmpty()) {
+            mostrarErro("Preencha todos os campos.");
+            return;
+        }
 
         try {
+            double simples = Double.parseDouble(simplesStr);
+            double especial = Double.parseDouble(especialStr);
+            double premium = Double.parseDouble(premiumStr);
 
-            TabelaPreco tabela = new TabelaPreco(
-                    Double.parseDouble(txtPrecoSimples.getText()),
-                    Double.parseDouble(txtPrecoEspecial.getText()),
-                    Double.parseDouble(txtPrecoPremium.getText()));
-
-            if (precoDAO.atualizar(tabela)) {
-
-                lblStatus.setText("Preços atualizados com sucesso.");
-
-            } else {
-
-                lblStatus.setText("Erro ao atualizar preços.");
+            if (simples < 0 || especial < 0 || premium < 0) {
+                mostrarErro("Os valores de preço devem ser maiores ou iguais a zero.");
+                return;
             }
 
-        } catch (NumberFormatException e) {
+            TabelaPreco tabela = new TabelaPreco(simples, especial, premium);
 
-            lblStatus.setText("Digite apenas números válidos.");
+            if (precoDAO.atualizar(tabela)) {
+                mostrarInfo("Preços atualizados com sucesso!");
+                carregarPrecos();
+            } else {
+                mostrarErro("Não foi possível atualizar os preços no banco de dados.");
+            }
+        } catch (NumberFormatException e) {
+            mostrarErro("Digite apenas valores numéricos válidos.");
+        } catch (SQLException e) {
+            mostrarErro("Erro de banco de dados ao salvar preços: " + e.getMessage());
         }
+    }
+
+    private void mostrarErro(String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
+    }
+
+    private void mostrarInfo(String mensagem) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setContentText(mensagem);
+        alert.showAndWait();
     }
 }
