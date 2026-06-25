@@ -15,28 +15,28 @@
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
 
-    <Label text="🍕Pizzaria Geométrica ooo"
+    <Label text="🍕Pizzaria Geométrica"
            style="-fx-font-size: 24px; -fx-font-weight: bold;" />
 
-    <Button text="Clientes"
+    <Button text="Cadastrar Pedido"
+            prefWidth="250"
+            onAction="#abrirPedido"/>
+
+    <Button text="Gerenciar Pedidos"
+            prefWidth="250"
+            onAction="#abrirStatus"/>
+
+    <Button text="Gerenciar Clientes"
             prefWidth="250"
             onAction="#abrirClientes"/>
 
-    <Button text="Pedidos"
-            prefWidth="250"
-            onAction="#abrirPedidos"/>
-
-    <Button text="Sabores"
+    <Button text="Gerenciar Sabores"
             prefWidth="250"
             onAction="#abrirSabores"/>
 
-    <Button text="Preços"
+    <Button text="Gerenciar Preços"
             prefWidth="250"
             onAction="#abrirPrecos"/>
-
-    <Button text="Status dos Pedidos"
-            prefWidth="250"
-            onAction="#abrirStatus"/>
 
     <Button text="Sair"
             prefWidth="250"
