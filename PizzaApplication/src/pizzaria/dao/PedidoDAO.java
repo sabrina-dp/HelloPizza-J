@@ -30,7 +30,7 @@ public class PedidoDAO {
         this.conexao = DatabaseManager.getInstancia().getConexao();
     }
 
-    public boolean inserir(Pedido pedido) {
+    public boolean inserir(Pedido pedido) throws SQLException {
         String sql = "INSERT INTO pedido (cliente_id, estado, preco_total) VALUES (?, ?, ?)";
         // RETURN_GENERATED_KEYS faz o banco devolver o id criado automaticamente pelo AUTOINCREMENT
         try (PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -51,94 +51,62 @@ public class PedidoDAO {
                     return true;
                 }
             }
-        } catch (SQLException e) {
-            System.err.println("Erro ao inserir pedido: " + e.getMessage());
         }
         return false;
     }
 
-    public boolean excluir(int id) {
-        // ON DELETE CASCADE no banco remove automaticamente os item_pedido filhos
-        String sql = "DELETE FROM pedido WHERE id = ?";
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setInt(1, id);
+    public boolean atualizar(Pedido pedido) throws SQLException {
+        String deletarItens = "DELETE FROM item_pedido WHERE pedido_id = ?";
+        try (PreparedStatement ps = conexao.prepareStatement(deletarItens)) {
+            ps.setInt(1, pedido.getId());
+            ps.executeUpdate();
+        }
+    
+        for (ItemPedido item : pedido.getItens()) {
+            inserirPizza(item.getPizza());
+            inserirItemPedido(pedido.getId(), item.getPizza().getId());
+        }
+    
+        String sqlUpdatePreco = "UPDATE pedido SET preco_total = ? WHERE id = ?";
+        try (PreparedStatement ps = conexao.prepareStatement(sqlUpdatePreco)) {
+            ps.setDouble(1, pedido.calcularTotal());
+            ps.setInt(2, pedido.getId());
             return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            System.err.println("Erro ao excluir pedido: " + e.getMessage());
         }
-        return false;
     }
 
-    public Pedido buscarPorId(int id) {
-        String sql = "SELECT * FROM pedido WHERE id = ?"; 
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapearPedido(rs);
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao buscar pedido por ID: " + e.getMessage());
-        }
-        return null;
-    }
-
-    public Pedido buscarPorCliente(int clienteId) {
+    public Pedido buscarPorCliente(int clienteId) throws SQLException {
         String sql = "SELECT * FROM pedido WHERE cliente_id = ? AND estado = 'ABERTO' LIMIT 1";
         try (PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setInt(1, clienteId);
             try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return mapearPedido(rs);
-                }
+                if (rs.next()) return mapearPedido(rs);
             }
-        } catch (SQLException e) {
-            System.err.println("Erro ao buscar pedido por cliente: " + e.getMessage());
         }
         return null;
     }
 
-    public List<Pedido> listarTodos() {
+    public List<Pedido> listarTodos() throws SQLException {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = "SELECT * FROM pedido";
         try (PreparedStatement ps = conexao.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-                pedidos.add(mapearPedido(rs));
-            }
-        } catch (SQLException e) {
-            System.err.println("Erro ao listar pedidos: " + e.getMessage());
+            ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) pedidos.add(mapearPedido(rs));
         }
         return pedidos;
     }
 
-    public boolean atualizarEstado(int idPedido, EstadoPedido estado) {
+    public boolean atualizarEstado(int idPedido, EstadoPedido estado) throws SQLException {
         String sql = "UPDATE pedido SET estado = ? WHERE id = ?";
         try (PreparedStatement ps = conexao.prepareStatement(sql)) {
             ps.setString(1, estado.name());
             ps.setInt(2, idPedido);
             return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            System.err.println("Erro ao atualizar estado: " + e.getMessage());
         }
-        return false;
     }
 
-    public boolean atualizarPrecoTotal(int idPedido, double novoTotal) {
-        String sql = "UPDATE pedido SET preco_total = ? WHERE id = ?";
-        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
-            ps.setDouble(1, novoTotal);
-            ps.setInt(2, idPedido);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            System.err.println("Erro ao atualizar preço total: " + e.getMessage());
-        }
-        return false;
-    }
+    // --------------------- Pizza e ItemPedido
 
-    // --------------------- Pizza e ItemPedido 
-    
     private void inserirPizza(Pizza pizza) throws SQLException {
         String sql = "INSERT INTO pizza (forma, dimensao, sabor1_id, sabor2_id) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -151,10 +119,9 @@ public class PedidoDAO {
                 ps.setNull(4, Types.INTEGER);
             }
             ps.executeUpdate();
+
             try (ResultSet keys = ps.getGeneratedKeys()) {
-                if (keys.next()) {
-                    pizza.setId(keys.getInt(1));
-                }
+                if (keys.next()) pizza.setId(keys.getInt(1));
             }
         }
     }
@@ -181,6 +148,7 @@ public class PedidoDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 SaborDAO saborDAO = new SaborDAO();
                 PrecoDAO precoDAO = new PrecoDAO();
+                TabelaPreco tabela = precoDAO.buscar(); // busca uma vez só, não a cada iteração
                 while (rs.next()) {
                     Forma forma = reconstruirForma(rs.getString("forma"), rs.getDouble("dimensao"));
                     Sabor sabor1 = saborDAO.buscarPorId(rs.getInt("sabor1_id"));
@@ -199,12 +167,11 @@ public class PedidoDAO {
     }
 
     private Pedido mapearPedido(ResultSet rs) throws SQLException {
-        ClienteDAO clienteDAO = new ClienteDAO(); // reconstrói o objeto Cliente completo a partir do id armazenado no pedido
-        Cliente cliente = clienteDAO.buscarPorId(rs.getInt("cliente_id")); 
+        ClienteDAO clienteDAO = new ClienteDAO();  // reconstrói o objeto Cliente completo a partir do id armazenado no pedido
+        Cliente cliente = clienteDAO.buscarPorId(rs.getInt("cliente_id"));
         Pedido pedido = new Pedido(rs.getInt("id"), cliente);
-        pedido.mudarEstado(EstadoPedido.valueOf(rs.getString("estado"))); // valueOf converte a String do banco ("ABERTO", "ENTREGUE"...) de volta pro enum
+        pedido.mudarEstado(EstadoPedido.valueOf(rs.getString("estado")));  // valueOf converte a String do banco ("ABERTO", "ENTREGUE"...) de volta pro enum
         pedido.setPrecoTotal(rs.getDouble("preco_total")); // precoTotal vem do banco invés de recalcular
-        // Carrega os itens do pedido do banco
         for (ItemPedido item : carregarItensDoPedido(pedido.getId())) {
             pedido.adicionarItem(item);
         }
@@ -212,11 +179,11 @@ public class PedidoDAO {
     }
 
     private Forma reconstruirForma(String nome, double dimensao) {
-        switch (nome) {
-            case "Circular": return new Circulo(dimensao);
-            case "Quadrado": return new Quadrado(dimensao);
-            case "Triangulo": return new Triangulo(dimensao);
-            default: throw new IllegalArgumentException("Forma desconhecida: " + nome);
-        }
+        return switch (nome) {
+            case "Circular" -> new Circulo(dimensao);
+            case "Quadrado" -> new Quadrado(dimensao);
+            case "Triangulo" -> new Triangulo(dimensao);
+            default -> throw new IllegalArgumentException("Forma desconhecida: " + nome);
+        };
     }
 }
