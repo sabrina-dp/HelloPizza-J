@@ -148,6 +148,8 @@ public class PedidoController {
 
         } catch (IllegalArgumentException e) {
             mostrarErro(e.getMessage());
+        } catch (SQLException e) {
+            mostrarErro("Erro ao buscar a tabela de preços no banco de dados: " + e.getMessage());
         }
     }
 
