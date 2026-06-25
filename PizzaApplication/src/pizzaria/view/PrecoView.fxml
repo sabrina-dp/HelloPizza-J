@@ -1,71 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
 
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pizzaria.controller.PrecoController"
+            prefWidth="420" prefHeight="250">
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="pizzaria.controller.PrecoController"
-      spacing="15"
-      alignment="CENTER">
+    <top>
+        <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
-    <padding>
-        <Insets top="20"
-                right="20"
-                bottom="20"
-                left="20"/>
-    </padding>
+            <Label text="Configuração de Preços"
+                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
-    <Label text="Configuração de Preços"
-           style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+            <GridPane hgap="10" vgap="8">
+                <Label text="Simples (R$/cm²):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPrecoSimples" GridPane.rowIndex="0" GridPane.columnIndex="1"
+                           prefWidth="220" promptText="Ex: 0.05"/>
 
-    <GridPane hgap="10"
-              vgap="15">
+                <Label text="Especial (R$/cm²):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPrecoEspecial" GridPane.rowIndex="1" GridPane.columnIndex="1"
+                           prefWidth="220" promptText="Ex: 0.08"/>
 
-        <Label text="Simples (R$/cm²)"
-               GridPane.rowIndex="0"
-               GridPane.columnIndex="0"/>
+                <Label text="Premium (R$/cm²):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPrecoPremium" GridPane.rowIndex="2" GridPane.columnIndex="1"
+                           prefWidth="220" promptText="Ex: 0.12"/>
+            </GridPane>
+        </VBox>
+    </top>
 
-        <TextField fx:id="txtPrecoSimples"
-                   GridPane.rowIndex="0"
-                   GridPane.columnIndex="1"/>
+    <center>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+            <Button text="Salvar" onAction="#salvarPrecos"
+                    style="-fx-base: #3a7bd5; -fx-text-fill: white;"/>
+            <Button text="Restaurar" onAction="#carregarPrecos"/>
+        </HBox>
+    </center>
 
-        <Label text="Especial (R$/cm²)"
-               GridPane.rowIndex="1"
-               GridPane.columnIndex="0"/>
-
-        <TextField fx:id="txtPrecoEspecial"
-                   GridPane.rowIndex="1"
-                   GridPane.columnIndex="1"/>
-
-        <Label text="Premium (R$/cm²)"
-               GridPane.rowIndex="2"
-               GridPane.columnIndex="0"/>
-
-        <TextField fx:id="txtPrecoPremium"
-                   GridPane.rowIndex="2"
-                   GridPane.columnIndex="1"/>
-
-    </GridPane>
-
-    <HBox spacing="10">
-
-        <Button text="Salvar"
-                onAction="#salvarPrecos"/>
-
-        <Button text="Restaurar"
-                onAction="#carregarPrecos"/>
-
-    </HBox>
-
-    <Label fx:id="lblStatus"
-           text=""/>
-
-</VBox> 
-</AnchorPane>
+</BorderPane>
