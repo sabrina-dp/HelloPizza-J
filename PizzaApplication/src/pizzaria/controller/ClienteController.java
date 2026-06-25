@@ -26,8 +26,8 @@ public class ClienteController {
     @FXML private TableColumn<Cliente, String> colSobrenome;
     @FXML private TableColumn<Cliente, String> colTelefone;
 
-    private ClienteDAO clienteDAO = new ClienteDAO();
-    private ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
+    final ClienteDAO clienteDAO = new ClienteDAO();
+    final ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
     private Cliente clienteSelecionado = null;
 
     @FXML
