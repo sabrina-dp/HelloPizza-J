@@ -1,195 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="pizzaria.controller.PedidoController">
+<BorderPane prefHeight="680" prefWidth="700" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizzaria.controller.PedidoController">
 
     <top>
-        <VBox spacing="10">
-            <padding>
-                <Insets top="15" right="15" bottom="15" left="15"/>
-            </padding>
-
-            <Label text="Pedido de Pizza"
-                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
-
-            <HBox spacing="10">
-                <Label text="Telefone:"/>
-
-                <TextField fx:id="txtTelefone"
-                           promptText="Digite o telefone"/>
-
-                <Button text="Buscar Cliente"
-                        onAction="#buscarCliente"/>
-
-                <Label fx:id="lblCliente"
-                       text="Cliente não selecionado"/>
+        <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;">
+            <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
+            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Pedido de Pizza" />
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Telefone:" />
+                <TextField fx:id="txtTelefone" prefWidth="160" promptText="(00) 00000-0000" />
+                <Button onAction="#buscarCliente" text="Buscar Cliente" />
+                <Label fx:id="lblCliente" style="-fx-text-fill: #666;" text="Nenhum cliente selecionado" />
             </HBox>
-
         </VBox>
     </top>
 
     <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <VBox spacing="15">
+                <padding><Insets bottom="10" left="15" right="15" top="15" /></padding>
 
-        <VBox spacing="15">
+                <TitledPane collapsible="false" expanded="true" text="Montar Pizza">
+                    <VBox spacing="12">
+                        <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
 
-            <padding>
-                <Insets top="10" right="15" bottom="10" left="15"/>
-            </padding>
+                        <Label text="Forma" />
+                        <HBox spacing="20">
+                            <RadioButton fx:id="rbCirculo" text="Círculo" />
+                            <RadioButton fx:id="rbQuadrado" text="Quadrado" />
+                            <RadioButton fx:id="rbTriangulo" text="Triângulo" />
+                        </HBox>
 
-            <!-- Dados da Pizza -->
+                        <HBox spacing="20">
+                            <VBox spacing="5">
+                                <Label text="Dimensão (raio ou lado em cm)" />
+                                <TextField fx:id="txtDimensao" prefWidth="180" promptText="Ex: 15" />
+                            </VBox>
+                            <Label style="-fx-padding: 20 0 0 0;" text="ou" />
+                            <VBox spacing="5">
+                                <Label text="Área desejada (cm²)" />
+                                <TextField fx:id="txtArea" prefWidth="180" promptText="100 – 1600" />
+                            </VBox>
+                        </HBox>
 
-            <TitledPane text="Dados da Pizza" expanded="true">
+                        <HBox spacing="20">
+                            <VBox spacing="5">
+                                <Label text="Sabor 1 (obrigatório)" />
+                                <ComboBox fx:id="cbSabor1" prefWidth="200" />
+                            </VBox>
+                            <VBox spacing="5">
+                                <Label text="Sabor 2 (opcional)" />
+                                <ComboBox fx:id="cbSabor2" prefWidth="200" />
+                            </VBox>
+                        </HBox>
 
-                <VBox spacing="10">
+                        <HBox spacing="30">
+                            <Label fx:id="lblAreaCalculada" style="-fx-font-weight: bold;" text="Área: —" />
+                            <Label fx:id="lblPrecoPizza" style="-fx-font-weight: bold; -fx-text-fill: #2a7a2a;" text="Preço estimado: —" />
+                        </HBox>
 
-                    <Label text="Forma da Pizza"/>
+                        <Button onAction="#adicionarPizza" style="-fx-base: #3a7bd5; -fx-text-fill: white;" text="+ Adicionar Pizza ao Pedido" />
+                    </VBox>
+                </TitledPane>
 
-                    <HBox spacing="15">
+                <TitledPane collapsible="false" expanded="true" text="Pizzas no Pedido">
+                    <VBox spacing="10">
+                        <padding><Insets bottom="10" left="10" right="10" top="10" /></padding>
+                        <TableView fx:id="tblItensPedido" prefHeight="220">
+                            <columns>
+                                <TableColumn fx:id="colForma" prefWidth="110" text="Forma" />
+                                <TableColumn fx:id="colSabores" prefWidth="260" text="Sabores" />
+                                <TableColumn fx:id="colArea" prefWidth="120" text="Área (cm²)" />
+                                <TableColumn fx:id="colPreco" prefWidth="120" text="Preço" />
+                            </columns>
+                            <placeholder><Label text="Nenhuma pizza adicionada ainda." /></placeholder>
+                        </TableView>
+                    </VBox>
+                </TitledPane>
 
-                        <RadioButton fx:id="rbCirculo"
-                                     text="Círculo"/>
-
-                        <RadioButton fx:id="rbQuadrado"
-                                     text="Quadrado"/>
-
-                        <RadioButton fx:id="rbTriangulo"
-                                     text="Triângulo"/>
-
-                    </HBox>
-
-                    <GridPane hgap="10" vgap="10">
-
-                        <Label text="Dimensão:"
-                               GridPane.rowIndex="0"
-                               GridPane.columnIndex="0"/>
-
-                        <TextField fx:id="txtDimensao"
-                                   promptText="Raio ou lado"
-                                   GridPane.rowIndex="0"
-                                   GridPane.columnIndex="1"/>
-
-                        <Label text="Área (cm²):"
-                               GridPane.rowIndex="1"
-                               GridPane.columnIndex="0"/>
-
-                        <TextField fx:id="txtArea"
-                                   promptText="Informe a área"
-                                   GridPane.rowIndex="1"
-                                   GridPane.columnIndex="1"/>
-
-                    </GridPane>
-
-                    <HBox spacing="10">
-
-                        <Label text="Sabor 1:"/>
-
-                        <ComboBox fx:id="cbSabor1"
-                                  prefWidth="200"/>
-
-                        <Label text="Sabor 2:"/>
-
-                        <ComboBox fx:id="cbSabor2"
-                                  prefWidth="200"/>
-
-                    </HBox>
-
-                    <HBox spacing="20">
-
-                        <Label fx:id="lblAreaCalculada"
-                               text="Área: 0 cm²"/>
-
-                        <Label fx:id="lblPrecoPizza"
-                               text="Preço: R$ 0,00"/>
-
-                    </HBox>
-
-                    <Button text="Adicionar Pizza"
-                            onAction="#adicionarPizza"/>
-
-                </VBox>
-
-            </TitledPane>
-
-            <!-- Itens do Pedido -->
-
-            <TitledPane text="Pizzas do Pedido"
-                         expanded="true">
-
-                <VBox spacing="10">
-
-                    <TableView fx:id="tblItensPedido"
-                               prefHeight="250">
-
-                        <columns>
-
-                            <TableColumn fx:id="colForma"
-                                         text="Forma"
-                                         prefWidth="120"/>
-
-                            <TableColumn fx:id="colSabores"
-                                         text="Sabores"
-                                         prefWidth="250"/>
-
-                            <TableColumn fx:id="colArea"
-                                         text="Área"
-                                         prefWidth="120"/>
-
-                            <TableColumn fx:id="colPreco"
-                                         text="Preço"
-                                         prefWidth="120"/>
-
-                        </columns>
-
-                    </TableView>
-
-                    <HBox spacing="20">
-
-                        <Label text="Total do Pedido:"/>
-
-                        <Label fx:id="lblTotalPedido"
-                               text="R$ 0,00"
-                               style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
-                    </HBox>
-
-                </VBox>
-
-            </TitledPane>
-
-        </VBox>
-
+            </VBox>
+        </ScrollPane>
     </center>
 
     <bottom>
-
-        <HBox spacing="10"
-              alignment="CENTER_RIGHT">
-
-            <padding>
-                <Insets top="10" right="15" bottom="15" left="15"/>
-            </padding>
-
-            <Button text="Remover Pizza"
-                    onAction="#removerPizza"/>
-
-            <Button text="Atualizar Pedido"
-                    onAction="#atualizarPedido"/>
-
-            <Button text="Salvar Pedido"
-                    onAction="#salvarPedido"/>
-
+        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 1 0 0 0;">
+            <padding><Insets bottom="12" left="15" right="15" top="12" /></padding>
+            <Label text="Total do Pedido:" />
+            <Label fx:id="lblTotalPedido" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a7a2a;" text="R$ 0,00" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#removerPizza" text="Remover Pizza" />
+            <Button onAction="#salvarPedido" style="-fx-base: #3a7bd5; -fx-text-fill: white;" text="Salvar Pedido" />
         </HBox>
-
     </bottom>
 
 </BorderPane>
-</AnchorPane>
