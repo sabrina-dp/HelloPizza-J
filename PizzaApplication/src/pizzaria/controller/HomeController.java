@@ -23,24 +23,24 @@ public class HomeController {
         }
     }
 
-    public void abrirClientes(ActionEvent event) { 
-        abrirTela("ClienteView.fxml", "Clientes"); 
-    }
-
-    public void abrirPedidos(ActionEvent event) {
-        abrirTela("PedidoView.fxml", "Pedidos"); 
-    }
-
-    public void abrirSabores(ActionEvent event) { 
-        abrirTela("SaborView.fxml", "Sabores"); 
-    }
-
-    public void abrirPrecos(ActionEvent event) {
-        abrirTela("PrecoView.fxml", "Preços"); 
+    public void abrirPedido(ActionEvent event) {
+        abrirTela("PedidoView.fxml", "Cadastrar Pedido"); 
     }
 
     public void abrirStatus(ActionEvent event) {
-        abrirTela("StatusView.fxml", "Status dos Pedidos"); 
+        abrirTela("StatusView.fxml", "Gerenciar Pedidos"); 
+    }
+
+    public void abrirClientes(ActionEvent event) { 
+        abrirTela("ClienteView.fxml", "Gerenciar Clientes"); 
+    }
+
+    public void abrirSabores(ActionEvent event) { 
+        abrirTela("SaborView.fxml", "Gerenciar Sabores"); 
+    }
+
+    public void abrirPrecos(ActionEvent event) {
+        abrirTela("PrecoView.fxml", "Gerenciar Preços"); 
     }
 
     public void sair(ActionEvent event) {
