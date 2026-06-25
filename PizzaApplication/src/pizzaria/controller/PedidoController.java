@@ -32,14 +32,14 @@ public class PedidoController {
 
     private Cliente clienteAtual;
     private Pedido pedidoAtual;
-    private ObservableList<ItemPedido> itensObservable = FXCollections.observableArrayList();
+    final ObservableList<ItemPedido> itensObservable = FXCollections.observableArrayList();
 
-    private ClienteDAO clienteDAO = new ClienteDAO();
-    private PedidoDAO pedidoDAO = new PedidoDAO();
-    private SaborDAO saborDAO = new SaborDAO();
-    private PrecoDAO precoDAO = new PrecoDAO();
+    final ClienteDAO clienteDAO = new ClienteDAO();
+    final PedidoDAO pedidoDAO = new PedidoDAO();
+    final SaborDAO saborDAO = new SaborDAO();
+    final PrecoDAO precoDAO = new PrecoDAO();
 
-    private ToggleGroup grupoForma = new ToggleGroup();
+    final ToggleGroup grupoForma = new ToggleGroup();
 
     @FXML
     public void initialize() {
