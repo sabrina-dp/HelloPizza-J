@@ -114,7 +114,11 @@ public class SaborController {
                     carregarSabores();
                     mostrarInfo("Sabor excluído com sucesso!");
                 } catch (SQLException e) {
-                    mostrarErro("Erro ao excluir sabor: " + e.getMessage());
+                    if (e.getMessage().contains("FOREIGN KEY constraint failed")) {
+                        mostrarErro("Não é possível excluir este sabor. Ele já está vinculado a uma pizza ou pedido existente no sistema.");
+                    } else {
+                        mostrarErro("Erro ao excluir sabor: " + e.getMessage());
+                    }
                 }
             }
         });
