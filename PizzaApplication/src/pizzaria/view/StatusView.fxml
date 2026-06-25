@@ -1,121 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1">
-
-
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="pizzaria.controller.StatusController">
+            fx:controller="pizzaria.controller.StatusController"
+            prefWidth="800" prefHeight="600">
 
     <top>
+        <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
-        <VBox spacing="10">
-
-            <padding>
-                <Insets top="15"
-                        right="15"
-                        bottom="15"
-                        left="15"/>
-            </padding>
-
-            <Label text="Status dos Pedidos"
-                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
-
-            <HBox spacing="10">
-
-                <Label text="Cliente:"/>
-
-                <TextField fx:id="txtPesquisaCliente"
-                           promptText="Nome ou telefone"/>
-
-                <Button text="Buscar"
-                        onAction="#buscarPedidos"/>
-
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label text="Gerenciamento de Pedidos"
+                       style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="+ Cadastrar Novo Pedido" onAction="#cadastrarPedido"
+                        style="-fx-base: #3a7bd5; -fx-text-fill: white; -fx-font-weight: bold;"/>
             </HBox>
-
         </VBox>
-
     </top>
 
     <center>
-
         <VBox spacing="10">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
-            <padding>
-                <Insets top="10"
-                        right="15"
-                        bottom="10"
-                        left="15"/>
-            </padding>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Pesquisar (Nome ou Telefone):"/>
+                <TextField fx:id="txtPesquisaCliente" prefWidth="250" promptText="Digite para filtrar..."/>
+                <Button text="Buscar" onAction="#buscarPedidos"/>
+            </HBox>
 
-            <TableView fx:id="tblPedidos">
-
+            <TableView fx:id="tblPedidos" VBox.vgrow="ALWAYS">
                 <columns>
-
-                    <TableColumn fx:id="colId"
-                                 text="Pedido"
-                                 prefWidth="80"/>
-
-                    <TableColumn fx:id="colCliente"
-                                 text="Cliente"
-                                 prefWidth="180"/>
-
-                    <TableColumn fx:id="colTelefone"
-                                 text="Telefone"
-                                 prefWidth="140"/>
-
-                    <TableColumn fx:id="colValor"
-                                 text="Valor"
-                                 prefWidth="120"/>
-
-                    <TableColumn fx:id="colEstado"
-                                 text="Estado"
-                                 prefWidth="120"/>
-
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="colCliente" text="Cliente" prefWidth="200"/>
+                    <TableColumn fx:id="colTelefone" text="Telefone" prefWidth="120"/>
+                    <TableColumn fx:id="colValor" text="Valor Total (R$)" prefWidth="120"/>
+                    <TableColumn fx:id="colEstado" text="Status" prefWidth="150"/>
                 </columns>
-
+                <placeholder>
+                    <Label text="Nenhum pedido encontrado no sistema."/>
+                </placeholder>
             </TableView>
 
         </VBox>
-
     </center>
 
     <bottom>
-
-        <VBox spacing="10">
-
-            <padding>
-                <Insets top="10"
-                        right="15"
-                        bottom="15"
-                        left="15"/>
-            </padding>
-
-            <Label fx:id="lblPedidoSelecionado"
-                   text="Nenhum pedido selecionado"/>
-
-            <HBox spacing="10">
-
-                <Label text="Novo Estado:"/>
-
-                <ComboBox fx:id="cbEstado"
-                          prefWidth="180"/>
-
-                <Button text="Atualizar Estado"
-                        onAction="#atualizarEstado"/>
-
-            </HBox>
-
-        </VBox>
-
+        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 1 0 0 0;">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+            
+            <Label fx:id="lblPedidoSelecionado" text="Nenhum pedido selecionado" style="-fx-font-weight: bold;"/>
+            
+            <Region HBox.hgrow="ALWAYS" />
+            
+            <Button text="Editar Pedido" onAction="#editarPedidoSelecionado" />
+            
+            <Label text="Alterar Status para:"/>
+            <ComboBox fx:id="cbEstado" prefWidth="150" promptText="Selecione..."/>
+            <Button text="Atualizar Estado" onAction="#atualizarEstado" 
+                    style="-fx-base: #2a7a2a; -fx-text-fill: white;"/>
+        </HBox>
     </bottom>
 
-</BorderPane>   
-</AnchorPane>
+</BorderPane>
