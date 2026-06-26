@@ -1,0 +1,43 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* Created on : 25 de jun. de 2026, 17:15:11
+    Author     : Harumi Ivanaga
+*/
+
+.root {
+    -fx-background-color: #FFF0F5; 
+}
+
+/* Fundo exclusivo para a tela HOME (Com a Hello Kitty) */
+.fundo-home {
+    -fx-background-image: url("meufundo.png"); 
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: cover;
+}
+
+.button {
+    -fx-background-color: #FF69B4; /* Botões rosa choque */
+    -fx-text-fill: white; /* Texto do botão continua branco para dar leitura */
+    -fx-font-weight: bold;
+    -fx-background-radius: 15; 
+}
+
+.button:hover {
+    -fx-background-color: #FF1493; 
+    -fx-cursor: hand;
+}
+
+.text-field {
+    -fx-background-radius: 10;
+    -fx-border-color: #FFB6C1;
+    -fx-border-radius: 10;
+    -fx-text-fill: #C71585; /* LETRAS QUE VOCÊ DIGITA: Rosa Escuro (MediumVioletRed) */
+}
+
+.label {
+    -fx-text-fill: #C71585; /* LETRAS DOS TEXTOS DA TELA: Rosa Escuro */
+    -fx-font-weight: bold; /* Deixei em negrito para destacar bem no fundo claro */
+}

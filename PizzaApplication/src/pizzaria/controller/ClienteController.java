@@ -62,10 +62,6 @@ public class ClienteController {
             mostrarErro("Preencha todos os campos.");
             return;
         }
-        
-        if (!validarCamposFormato(nome, telefone)) {
-            return; 
-        }
 
         try {
             Cliente novo = new Cliente(0, nome, sobrenome, telefone);
@@ -183,19 +179,5 @@ public class ClienteController {
         alert.setHeaderText(null);
         alert.setContentText(mensagem);
         alert.showAndWait();
-    }
-    
-    private boolean validarCamposFormato(String nome, String telefone) {
-        if (!nome.matches("^[A-Za-zÀ-ÿ\\s]+$")) {
-            mostrarErro("O nome deve conter apenas letras.");
-            return false;
-        }
-
-        if (!telefone.matches("^[0-9\\-\\(\\)\\s]{8,15}$")) {
-            mostrarErro("O telefone informado é inválido. Use apenas números.");
-            return false;
-        }
-
-        return true;
     }
 }

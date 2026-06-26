@@ -8,11 +8,11 @@ public class Cliente {
     private String telefone;
     
     //atributos do cliente
-    public Cliente (int ID, String nome, String sobrenome, String telefone ){
+    public Cliente(int ID, String nome, String sobrenome, String telefone) {
         this.ID = ID;
-        this.nome = nome;
-        this.sobrenome = sobrenome;
-        this.telefone = telefone;
+        setNome(nome);      
+        setSobrenome(sobrenome);
+        setTelefone(telefone);
     }
 
     //métodos, getters e setters.
@@ -28,10 +28,11 @@ public class Cliente {
         return nome;
     }
     
-   public void setNome(String nome) {
-        if(nome == null || nome.trim().isEmpty()) {
+    public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty())
             throw new IllegalArgumentException("Nome não pode ser vazio.");
-        }
+        if (!nome.matches("^[A-Za-zÀ-ÿ\\s]+$"))
+            throw new IllegalArgumentException("Nome deve conter apenas letras.");
         this.nome = nome;
     }
     
@@ -40,9 +41,10 @@ public class Cliente {
     }
     
      public void setSobrenome(String sobrenome) {
-        if( sobrenome == null || sobrenome.trim().isEmpty()) {
+        if (sobrenome == null || sobrenome.trim().isEmpty())
             throw new IllegalArgumentException("Sobrenome não pode ser vazio.");
-        }
+        if (!sobrenome.matches("^[A-Za-zÀ-ÿ\\s]+$"))
+            throw new IllegalArgumentException("Sobrenome deve conter apenas letras.");
         this.sobrenome = sobrenome;
     }
      
@@ -51,9 +53,10 @@ public class Cliente {
     }
     
     public void setTelefone(String telefone) {
-        if(telefone == null || telefone.trim().isEmpty()) {
-            throw new IllegalArgumentException("Telefone inválido.");
-        }
+        if (telefone == null || telefone.trim().isEmpty())
+            throw new IllegalArgumentException("Telefone não pode ser vazio.");
+        if (!telefone.matches("^[0-9\\-\\(\\)\\s]{8,15}$"))
+            throw new IllegalArgumentException("Telefone inválido. Use apenas números.");
         this.telefone = telefone;
     }
 
