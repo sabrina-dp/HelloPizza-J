@@ -17,7 +17,7 @@ public class SaborDAO {
     private final Connection conexao;
 
     public SaborDAO() {
-        this.conexao = DatabaseManager.getInstancia().getConexao();
+        this.conexao = ConnectionFactory.getInstancia().getConexao();
     }
 
     public int inserir(Sabor sabor) throws SQLException {

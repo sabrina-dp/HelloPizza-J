@@ -17,7 +17,7 @@ public class ClienteDAO {
     private final Connection conexao;
 
     public ClienteDAO() {
-        this.conexao = DatabaseManager.getInstancia().getConexao(); // pega conexão já aberta, ao invés de abrir uma nova
+        this.conexao = ConnectionFactory.getInstancia().getConexao(); // pega conexão já aberta, ao invés de abrir uma nova
     }
 
     /**
