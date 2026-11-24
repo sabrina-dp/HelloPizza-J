@@ -28,7 +28,7 @@ public class PedidoDAO {
     private final Connection conexao;
 
     public PedidoDAO() {
-        this.conexao = DatabaseManager.getInstancia().getConexao();
+        this.conexao = ConnectionFactory.getInstancia().getConexao();
     }
 
     public boolean inserir(Pedido pedido) throws SQLException {

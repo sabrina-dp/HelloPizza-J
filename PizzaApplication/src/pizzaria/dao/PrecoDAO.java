@@ -12,7 +12,7 @@ public class PrecoDAO {
     private final Connection conexao;
 
     public PrecoDAO() {
-        this.conexao = DatabaseManager.getInstancia().getConexao();
+        this.conexao = ConnectionFactory.getInstancia().getConexao();
     }
 
     public TabelaPreco buscar() throws SQLException {
