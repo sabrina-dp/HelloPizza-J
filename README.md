@@ -1,6 +1,7 @@
 Diagrama de classes referente ao projeto: 
 
- <img width="4025" height="4125" alt="Blank diagram" src="https://github.com/user-attachments/assets/40e7e5d2-a94c-4e8e-8108-c4e91bda34d2" />
+<img width="4026" height="4125" alt="diagrama de classes" src="https://github.com/user-attachments/assets/98acd525-91f3-430d-9c98-c5f621540caa" />
+
 
 
   
