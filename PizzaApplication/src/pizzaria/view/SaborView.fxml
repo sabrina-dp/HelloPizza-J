@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="520" prefWidth="620" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizzaria.controller.SaborController" stylesheets="@style.css">
+<BorderPane prefHeight="520" prefWidth="620" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizzaria.controller.SaborController" stylesheets="@style.css" styleClass="tela-suave">
 
     <top>
-        <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;">
+        <VBox spacing="10" styleClass="painel-topo">
             <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
 
-            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Cadastro de Sabores" />
+            <Label styleClass="titulo" text="Cadastro de Sabores" />
 
             <GridPane hgap="10" vgap="8">
                 <Label text="Nome:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
@@ -39,7 +39,7 @@
             </GridPane>
 
             <HBox spacing="10">
-                <Button onAction="#cadastrarSabor" style="-fx-base: #3a7bd5; -fx-text-fill: white;" text="Cadastrar" />
+                <Button onAction="#cadastrarSabor" styleClass="botao-principal" text="Cadastrar" />
                 <Button onAction="#atualizarSabor" text="Atualizar" />
                 <Button onAction="#excluirSabor" text="Excluir" />
                 <Button onAction="#limparCampos" text="Limpar" />
@@ -66,7 +66,7 @@
                 <placeholder><Label text="Nenhum sabor cadastrado ou encontrado." /></placeholder>
             </TableView>
 
-            <Label fx:id="lblTotalSabores" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2a7a2a;" text="Total de sabores: 0" />
+            <Label fx:id="lblTotalSabores" styleClass="valor-destaque" style="-fx-font-size: 13px;" text="Total de sabores: 0" />
         </VBox>
     </center>
 

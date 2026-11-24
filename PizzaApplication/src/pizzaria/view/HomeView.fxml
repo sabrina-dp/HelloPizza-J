@@ -3,44 +3,42 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="pizzaria.controller.HomeController"
-      alignment="CENTER"
-      spacing="15"
-      stylesheets="@style.css"
-      styleClass="fundo-home">
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="pizzaria.controller.HomeController"
+            prefWidth="350" prefHeight="420"
+            stylesheets="@style.css"
+            styleClass="fundo-home">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+    <top>
+        <VBox alignment="CENTER" styleClass="painel-topo">
+            <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
-    <Label text="🍕Pizzaria HelloPizza"
-           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+            <Label text="🍕 Pizzaria HelloPizza" styleClass="titulo"/>
+        </VBox>
+    </top>
 
-    <Button text="Cadastrar Pedido"
-            prefWidth="250"
-            onAction="#abrirPedido"/>
+    <center>
+        <VBox alignment="CENTER">
+            <padding><Insets top="20" right="15" bottom="20" left="15"/></padding>
 
-    <Button text="Gerenciar Pedidos"
-            prefWidth="250"
-            onAction="#abrirStatus"/>
+            <!-- cartão translúcido: os botões ficam legíveis por cima da imagem de fundo -->
+            <VBox alignment="CENTER" spacing="12" maxWidth="250" styleClass="cartao">
+                <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
 
-    <Button text="Gerenciar Clientes"
-            prefWidth="250"
-            onAction="#abrirClientes"/>
+                <Button text="Cadastrar Pedido"   prefWidth="200" onAction="#abrirPedido"
+                        styleClass="botao-principal"/>
+                <Button text="Gerenciar Pedidos"  prefWidth="200" onAction="#abrirStatus"/>
+                <Button text="Gerenciar Clientes" prefWidth="200" onAction="#abrirClientes"/>
+                <Button text="Gerenciar Sabores"  prefWidth="200" onAction="#abrirSabores"/>
+                <Button text="Gerenciar Preços"   prefWidth="200" onAction="#abrirPrecos"/>
+                <Button text="Sair"               prefWidth="200" onAction="#sair"
+                        styleClass="botao-sair"/>
+            </VBox>
+        </VBox>
+    </center>
 
-    <Button text="Gerenciar Sabores"
-            prefWidth="250"
-            onAction="#abrirSabores"/>
-
-    <Button text="Gerenciar Preços"
-            prefWidth="250"
-            onAction="#abrirPrecos"/>
-
-    <Button text="Sair"
-            prefWidth="250"
-            onAction="#sair"/>
-</VBox>
+</BorderPane>

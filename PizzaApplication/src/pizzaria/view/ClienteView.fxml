@@ -8,14 +8,14 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="pizzaria.controller.ClienteController"
             prefWidth="620" prefHeight="520"
-            stylesheets="@style.css">
+            stylesheets="@style.css"
+            styleClass="tela-suave">
 
     <top>
-        <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;">
+        <VBox spacing="10" styleClass="painel-topo">
             <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
-            <Label text="Cadastro de Clientes"
-                   style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <Label text="Cadastro de Clientes" styleClass="titulo"/>
 
             <GridPane hgap="10" vgap="8">
                 <Label text="Nome:"        GridPane.rowIndex="0" GridPane.columnIndex="0"/>
@@ -29,8 +29,7 @@
             </GridPane>
 
             <HBox spacing="10">
-                <Button text="Cadastrar" onAction="#cadastrarCliente"
-                        style="-fx-base: #3a7bd5; -fx-text-fill: white;"/>
+                <Button text="Cadastrar" onAction="#cadastrarCliente" styleClass="botao-principal"/>
                 <Button text="Atualizar" onAction="#atualizarCliente"/>
                 <Button text="Excluir"   onAction="#excluirCliente"/>
                 <Button text="Limpar"    onAction="#limparCampos"/>

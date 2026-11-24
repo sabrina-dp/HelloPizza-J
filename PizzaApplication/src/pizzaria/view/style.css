@@ -18,6 +18,32 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-background-size: cover;
 }
 
+/* Título da HOME: faixa branca translúcida para ler bem por cima da imagem */
+.titulo-home {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(255, 255, 255, 0.75);
+    -fx-background-radius: 20;
+    -fx-padding: 8 24 8 24;
+}
+
+/* ---------- Estrutura das telas internas ---------- */
+
+/* Substitui o cinza #f8f8f8 que estava inline no topo das telas */
+.painel-topo {
+    -fx-background-color: #FFE4EE;
+    -fx-border-color: #FFB6C1;
+    -fx-border-width: 0 0 1 0;
+}
+
+/* Substitui o -fx-font-size: 20px inline dos títulos */
+.titulo {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+/* ---------- Botões ---------- */
+
 .button {
     -fx-background-color: #FF69B4; /* Botões rosa choque */
     -fx-text-fill: white; /* Texto do botão continua branco para dar leitura */
@@ -30,6 +56,17 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-cursor: hand;
 }
 
+/* Botão de ação principal (Cadastrar/Salvar): rosa mais escuro, destaca dos demais */
+.botao-principal {
+    -fx-background-color: #C71585;
+}
+
+.botao-principal:hover {
+    -fx-background-color: #A0106B;
+}
+
+/* ---------- Campos ---------- */
+
 .text-field {
     -fx-background-radius: 10;
     -fx-border-color: #FFB6C1;
@@ -37,7 +74,248 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-text-fill: #C71585; /* LETRAS QUE VOCÊ DIGITA: Rosa Escuro (MediumVioletRed) */
 }
 
+.text-field:focused {
+    -fx-border-color: #FF69B4;
+}
+
 .label {
     -fx-text-fill: #C71585; /* LETRAS DOS TEXTOS DA TELA: Rosa Escuro */
     -fx-font-weight: bold; /* Deixei em negrito para destacar bem no fundo claro */
+}
+
+/* ---------- ComboBox ---------- */
+
+.combo-box {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #FFB6C1;
+    -fx-border-radius: 10;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #C71585;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #FFB6C1;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-text-fill: #C71585;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover,
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: #FF69B4;
+    -fx-text-fill: white;
+}
+
+/* ---------- RadioButton ---------- */
+
+.radio-button {
+    -fx-text-fill: #C71585;
+    -fx-font-weight: bold;
+}
+
+.radio-button .radio {
+    -fx-background-color: white;
+    -fx-border-color: #FF69B4;
+}
+
+.radio-button:selected .dot {
+    -fx-background-color: #FF1493;
+}
+
+/* ---------- TableView ---------- */
+
+.table-view {
+    -fx-background-color: white;
+    -fx-background-radius: 10;
+    -fx-border-color: #FFB6C1;
+    -fx-border-radius: 10;
+    -fx-control-inner-background: #FFF8FB;
+    -fx-control-inner-background-alt: #FFEAF3;
+    -fx-table-cell-border-color: #FFD6E7;
+}
+
+/* Sem o padding de 1px do Modena, o cabeçalho encosta direto na borda arredondada */
+.table-view {
+    -fx-padding: 0;
+}
+
+/* A faixa rosa do cabeçalho recebe o canto arredondado (9 = raio 10 da borda - 1px de borda) */
+.table-view .column-header-background {
+    -fx-background-color: #FFC0D9;
+    -fx-background-radius: 9 9 0 0;
+}
+
+/* As células do cabeçalho ficam transparentes para não "vazarem" pelos cantos arredondados */
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-border-color: transparent #FFB6C1 transparent transparent;
+    -fx-border-width: 0 1 0 0;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #8B0A50;
+}
+
+.table-cell {
+    -fx-text-fill: #C71585;
+}
+
+.table-row-cell:filled:selected {
+    -fx-background-color: #FF69B4;
+}
+
+.table-row-cell:filled:selected .table-cell {
+    -fx-text-fill: white;
+}
+
+/* ---------- Alertas (veja a nota sobre getDialogPane) ---------- */
+
+.dialog-pane {
+    -fx-background-color: #FFF0F5;
+}
+
+.dialog-pane > .button-bar > .container {
+    -fx-background-color: #FFF0F5;
+}
+
+/* ---------- Tela HOME ---------- */
+
+/* Cartão branco translúcido que segura os botões por cima da imagem de fundo */
+.cartao {
+    -fx-background-color: rgba(255, 255, 255, 0.85);
+    -fx-background-radius: 20;
+    -fx-border-color: #FFB6C1;
+    -fx-border-radius: 20;
+}
+
+/* Botão Sair: contornado em vez de preenchido, para não competir com os demais */
+.botao-sair {
+    -fx-background-color: white;
+    -fx-border-color: #FF69B4;
+    -fx-border-radius: 15;
+    -fx-text-fill: #C71585;
+}
+
+.botao-sair:hover {
+    -fx-background-color: #FFE4EE;
+}
+
+/* ---------- Tela de PEDIDO (e demais telas com painéis) ---------- */
+
+/* Rodapé: espelho do .painel-topo (substitui o cinza #f8f8f8 inline) */
+.painel-rodape {
+    -fx-background-color: #FFE4EE;
+    -fx-border-color: #FFB6C1;
+    -fx-border-width: 1 0 0 0;
+}
+
+/* Valores em destaque (área, preço, total) no lugar do verde inline */
+.valor-destaque {
+    -fx-text-fill: #8B0A50;
+}
+
+.valor-total {
+    -fx-font-size: 16px;
+    -fx-text-fill: #8B0A50;
+}
+
+/* ScrollPane: o viewport tinha cinza próprio, o inline só afetava a parte de fora */
+.scroll-pane {
+    -fx-background: #FFF0F5;
+    -fx-background-color: transparent;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #FFB6C1;
+    -fx-background-radius: 10;
+}
+
+/* TitledPane: barra de título rosa e conteúdo com borda rosa (era cinza) */
+.titled-pane > .title {
+    -fx-background-color: #FFC0D9;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10 10 0 0;
+}
+
+.titled-pane > .title > .text {
+    -fx-fill: #8B0A50;
+    -fx-font-weight: bold;
+}
+
+.titled-pane > *.content {
+    -fx-background-color: #FFF8FB;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0 0 10 10;
+    -fx-border-color: #FFB6C1;
+    -fx-border-width: 0 1 1 1;
+    -fx-border-radius: 0 0 10 10;
+}
+
+/* ---------- Ajustes do canto direito da tabela ---------- */
+
+/* A última coluna não desenha o separador, que ficava colado na curva do canto direito */
+.table-view .column-header:last-visible {
+    -fx-border-color: transparent;
+}
+
+/* Barras de rolagem da tabela sem fundo próprio (cinza) por cima da borda arredondada */
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal,
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+/* ---------- Tela de PEDIDO: versão mais suave (só vale dentro de .tela-pedido) ---------- */
+
+/* Fundo da página branco em vez de rosa */
+.tela-pedido {
+    -fx-background-color: white;
+}
+
+.tela-pedido .scroll-pane {
+    -fx-background: white;
+}
+
+/* Faixas do topo e do rodapé: rosa quase branco */
+.tela-pedido .painel-topo,
+.tela-pedido .painel-rodape {
+    -fx-background-color: #FFF5F9;
+}
+
+/* Painéis "Montar Pizza" e "Pizzas no Pedido": título rosa claro, corpo branco */
+.tela-pedido .titled-pane > .title {
+    -fx-background-color: #FFE4EE;
+}
+
+.tela-pedido .titled-pane > *.content {
+    -fx-background-color: white;
+}
+
+/* Tabela: cabeçalho claro e linhas alternadas bem discretas */
+.tela-pedido .table-view {
+    -fx-control-inner-background: white;
+    -fx-control-inner-background-alt: #FFF8FB;
+}
+
+.tela-pedido .table-view .column-header-background {
+    -fx-background-color: #FFE4EE;
 }

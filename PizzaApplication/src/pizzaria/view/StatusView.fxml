@@ -8,18 +8,18 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="pizzaria.controller.StatusController"
             prefWidth="800" prefHeight="600"
-            stylesheets="@style.css">
+            stylesheets="@style.css"
+            styleClass="tela-suave">
 
     <top>
-        <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;">
+        <VBox spacing="10" styleClass="painel-topo">
             <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
 
             <HBox alignment="CENTER_LEFT" spacing="20">
-                <Label text="Gerenciamento de Pedidos"
-                       style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <Label text="Gerenciamento de Pedidos" styleClass="titulo"/>
                 <Region HBox.hgrow="ALWAYS" />
                 <Button text="+ Cadastrar Novo Pedido" onAction="#cadastrarPedido"
-                        style="-fx-base: #3a7bd5; -fx-text-fill: white; -fx-font-weight: bold;"/>
+                        styleClass="botao-principal"/>
             </HBox>
         </VBox>
     </top>
@@ -51,19 +51,19 @@
     </center>
 
     <bottom>
-        <HBox spacing="15" alignment="CENTER_LEFT" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 1 0 0 0;">
+        <HBox spacing="15" alignment="CENTER_LEFT" styleClass="painel-rodape">
             <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
-            
-            <Label fx:id="lblPedidoSelecionado" text="Nenhum pedido selecionado" style="-fx-font-weight: bold;"/>
-            
+
+            <Label fx:id="lblPedidoSelecionado" text="Nenhum pedido selecionado"/>
+
             <Region HBox.hgrow="ALWAYS" />
-            
+
             <Button text="Editar Pedido" onAction="#editarPedidoSelecionado" />
-            
+
             <Label text="Alterar Status para:"/>
             <ComboBox fx:id="cbEstado" prefWidth="150" promptText="Selecione..."/>
-            <Button text="Atualizar Estado" onAction="#atualizarEstado" 
-                    style="-fx-base: #2a7a2a; -fx-text-fill: white;"/>
+            <Button text="Atualizar Estado" onAction="#atualizarEstado"
+                    styleClass="botao-principal"/>
         </HBox>
     </bottom>
 

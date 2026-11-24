@@ -15,23 +15,23 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="680" prefWidth="700" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizzaria.controller.PedidoController" stylesheets="@style.css">
+<BorderPane prefHeight="680" prefWidth="700" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pizzaria.controller.PedidoController" stylesheets="@style.css" styleClass="tela-pedido">
 
     <top>
-        <VBox spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 0 0 1 0;">
+        <VBox spacing="10" styleClass="painel-topo">
             <padding><Insets bottom="15" left="15" right="15" top="15" /></padding>
-            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Pedido de Pizza" />
+            <Label styleClass="titulo" text="Pedido de Pizza" />
             <HBox alignment="CENTER_LEFT" spacing="10">
                 <Label text="Telefone:" />
                 <TextField fx:id="txtTelefone" prefWidth="160" promptText="(00) 00000-0000" />
                 <Button onAction="#buscarCliente" text="Buscar Cliente" />
-                <Label fx:id="lblCliente" style="-fx-text-fill: #666;" text="Nenhum cliente selecionado" />
+                <Label fx:id="lblCliente" text="Nenhum cliente selecionado" />
             </HBox>
         </VBox>
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+        <ScrollPane fitToWidth="true">
             <VBox spacing="15">
                 <padding><Insets bottom="10" left="15" right="15" top="15" /></padding>
 
@@ -70,11 +70,11 @@
                         </HBox>
 
                         <HBox spacing="30">
-                            <Label fx:id="lblAreaCalculada" style="-fx-font-weight: bold;" text="Área: —" />
-                            <Label fx:id="lblPrecoPizza" style="-fx-font-weight: bold; -fx-text-fill: #2a7a2a;" text="Preço estimado: —" />
+                            <Label fx:id="lblAreaCalculada" text="Área: —" />
+                            <Label fx:id="lblPrecoPizza" styleClass="valor-destaque" text="Preço estimado: —" />
                         </HBox>
 
-                        <Button onAction="#adicionarPizza" style="-fx-base: #3a7bd5; -fx-text-fill: white;" text="+ Adicionar Pizza ao Pedido" />
+                        <Button onAction="#adicionarPizza" styleClass="botao-principal" text="+ Adicionar Pizza ao Pedido" />
                     </VBox>
                 </TitledPane>
 
@@ -98,13 +98,13 @@
     </center>
 
     <bottom>
-        <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-background-color: #f8f8f8; -fx-border-color: #ddd; -fx-border-width: 1 0 0 0;">
+        <HBox alignment="CENTER_RIGHT" spacing="10" styleClass="painel-rodape">
             <padding><Insets bottom="12" left="15" right="15" top="12" /></padding>
             <Label text="Total do Pedido:" />
-            <Label fx:id="lblTotalPedido" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2a7a2a;" text="R$ 0,00" />
+            <Label fx:id="lblTotalPedido" styleClass="valor-total" text="R$ 0,00" />
             <Region HBox.hgrow="ALWAYS" />
             <Button onAction="#removerPizza" text="Remover Pizza" />
-            <Button onAction="#salvarPedido" style="-fx-base: #3a7bd5; -fx-text-fill: white;" text="Salvar Pedido" />
+            <Button onAction="#salvarPedido" styleClass="botao-principal" text="Salvar Pedido" />
         </HBox>
     </bottom>
 
