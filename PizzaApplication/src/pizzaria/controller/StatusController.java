@@ -11,6 +11,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import pizzaria.dao.DAOFactory;
+import pizzaria.dao.DAOType;
 import pizzaria.dao.PedidoDAO;
 import pizzaria.model.Pedido;
 import pizzaria.model.EstadoPedido;
@@ -53,7 +55,7 @@ public class StatusController {
 
     public StatusController() {
         this.pedidosExibidos = FXCollections.observableArrayList();
-        this.pedidoDAO = new PedidoDAO();
+        this.pedidoDAO = DAOFactory.getPedidoDAO(DAOType.SQL);
     }
 
     @FXML

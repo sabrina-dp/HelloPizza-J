@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 import pizzaria.dao.ClienteDAO;
+import pizzaria.dao.DAOFactory;
+import pizzaria.dao.DAOType;
 import pizzaria.dao.PedidoDAO;
 import pizzaria.dao.SaborDAO;
 import pizzaria.dao.PrecoDAO;
@@ -34,10 +36,10 @@ public class PedidoController {
     private Pedido pedidoAtual;
     final ObservableList<ItemPedido> itensObservable = FXCollections.observableArrayList();
 
-    final ClienteDAO clienteDAO = new ClienteDAO();
-    final PedidoDAO pedidoDAO = new PedidoDAO();
-    final SaborDAO saborDAO = new SaborDAO();
-    final PrecoDAO precoDAO = new PrecoDAO();
+    final ClienteDAO clienteDAO = DAOFactory.getClienteDAO(DAOType.SQL);
+    final PedidoDAO pedidoDAO = DAOFactory.getPedidoDAO(DAOType.SQL);
+    final SaborDAO saborDAO = DAOFactory.getSaborDAO(DAOType.SQL);
+    final PrecoDAO precoDAO = DAOFactory.getPrecoDAO(DAOType.SQL);
 
     final ToggleGroup grupoForma = new ToggleGroup();
 
@@ -177,7 +179,8 @@ public class PedidoController {
         try {
             boolean sucesso;
             if (pedidoAtual.getId() == 0) {
-                sucesso = pedidoDAO.inserir(pedidoAtual);
+                // inserir() devolve o id gerado (ou -1 se falhou), então converte para boolean
+                sucesso = pedidoDAO.inserir(pedidoAtual) > 0;
             } else {
                 sucesso = pedidoDAO.atualizar(pedidoAtual);
             }

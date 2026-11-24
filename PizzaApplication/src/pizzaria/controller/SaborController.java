@@ -10,6 +10,8 @@ import javafx.beans.property.SimpleStringProperty;
 import java.sql.SQLException;
 import java.util.List;
 
+import pizzaria.dao.DAOFactory;
+import pizzaria.dao.DAOType;
 import pizzaria.dao.SaborDAO;
 import pizzaria.model.Sabor;
 import pizzaria.model.TipoPizza;
@@ -25,7 +27,7 @@ public class SaborController {
     @FXML private TableColumn<Sabor, String> colTipo;
     @FXML private Label lblTotalSabores;
 
-    private final SaborDAO saborDAO = new SaborDAO();
+    private final SaborDAO saborDAO = DAOFactory.getSaborDAO(DAOType.SQL);
     private final ObservableList<Sabor> listaSabores = FXCollections.observableArrayList();
     private Sabor saborSelecionado = null;
 

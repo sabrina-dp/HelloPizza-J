@@ -3,6 +3,8 @@ package pizzaria.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import pizzaria.dao.DAOFactory;
+import pizzaria.dao.DAOType;
 import pizzaria.dao.PrecoDAO;
 import pizzaria.model.TabelaPreco;
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ public class PrecoController {
 
     @FXML
     public void initialize() {
-        precoDAO = new PrecoDAO();
+        precoDAO = DAOFactory.getPrecoDAO(DAOType.SQL);
         carregarPrecos();
     }
 

@@ -10,6 +10,8 @@ import javafx.beans.property.SimpleStringProperty;
 import java.sql.SQLException;
 import java.util.List;
 
+import pizzaria.dao.DAOType;
+import pizzaria.dao.DAOFactory;
 import pizzaria.dao.ClienteDAO;
 import pizzaria.model.Cliente;
 
@@ -26,7 +28,7 @@ public class ClienteController {
     @FXML private TableColumn<Cliente, String> colSobrenome;
     @FXML private TableColumn<Cliente, String> colTelefone;
 
-    final ClienteDAO clienteDAO = new ClienteDAO();
+    final ClienteDAO clienteDAO = DAOFactory.getClienteDAO(DAOType.SQL);
     final ObservableList<Cliente> listaClientes = FXCollections.observableArrayList();
     private Cliente clienteSelecionado = null;
 
@@ -69,7 +71,7 @@ public class ClienteController {
             limparCampos();
             carregarClientes();
             mostrarInfo("Cliente cadastrado com sucesso!");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             mostrarErro("Erro ao cadastrar cliente: " + e.getMessage());
         }
     }
@@ -98,7 +100,7 @@ public class ClienteController {
             limparCampos();
             carregarClientes();
             mostrarInfo("Cliente atualizado com sucesso!");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             mostrarErro("Erro ao atualizar cliente: " + e.getMessage());
         }
     }
@@ -121,7 +123,7 @@ public class ClienteController {
                     limparCampos();
                     carregarClientes();
                     mostrarInfo("Cliente excluído com sucesso!");
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     mostrarErro("Erro ao excluir cliente: " + e.getMessage());
                 }
             }
@@ -144,7 +146,7 @@ public class ClienteController {
         try {
             List<Cliente> resultado = clienteDAO.buscarFiltrado(filtro);
             listaClientes.setAll(resultado);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             mostrarErro("Erro ao pesquisar: " + e.getMessage());
         }
     }
@@ -162,7 +164,7 @@ public class ClienteController {
         try {
             List<Cliente> clientes = clienteDAO.listarTodos();
             listaClientes.setAll(clientes);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             mostrarErro("Erro ao carregar clientes: " + e.getMessage());
         }
     }

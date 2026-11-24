@@ -29,3 +29,5 @@ replay_pid*
 /PizzaApplication/build/
 /PizzaApplication/dist/
 *.db
+
+/PizzaApplication/libs/
